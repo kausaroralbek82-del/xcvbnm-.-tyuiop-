@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Age Calculator</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #eee;
+        font-family: Arial;
+      }
+      .container {
+        width: 400px;
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        text-align: center;
+      }
+      input {
+        width: 60px;
+        padding: 5px;
+        font-size: 18px;
+        margin: 0 5px;
+      }
+      button {
+        padding: 10px 20px;
+        margin-top: 15px;
+        font-size: 18px;
+        cursor: pointer;
+        background: #7c4dff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
+      .result {
+        margin-top: 20px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #7c4dff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <input class="day" placeholder="DD" />
+        <input class="month" placeholder="MM" />
+        <input class="year" placeholder="YYYY" />
+      </div>
+      <button>Calculate</button>
+      <div class="result">-- years -- months -- days</div>
+    </div>
+
+    <script>
+      const dayInput = document.querySelector(".day");
+      const monthInput = document.querySelector(".month");
+      const yearInput = document.querySelector(".year");
+      const button = document.querySelector("button");
+      const result = document.querySelector(".result");
+
+      button.addEventListener("click", () => {
+        const day = +dayInput.value;
+        const month = +monthInput.value - 1;
+        const year = +yearInput.value;
+
+        if (!day || !monthInput.value || !year) {
+          alert("Please fill all fields");
+          return;
+        }
+
+        const birth = new Date(year, month, day);
+        const today = new Date();
+
+        let years = today.getFullYear() - birth.getFullYear();
+        let months = today.getMonth() - birth.getMonth();
+        let days = today.getDate() - birth.getDate();
+
+        if (days < 0) {
+          months--;
+          days += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+        }
+
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+
+        result.textContent = `${years} years ${months} months ${days} days`;
+      });
+    </script>
+  </body>
+</html>
